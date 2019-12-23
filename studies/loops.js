@@ -11,9 +11,13 @@
 // For Loop
 /* good for looping through arrays. to build a for loop you need 3 key statements: a starting index, a stopping index, and how much
 you want to increment the index. */
-var array = ['apples', 'oranges', 'bananas']
+var array = ['apples', 'oranges', 'bananas'];
 for (var i = 0; i <= array.length - 1; i++) {
-    console.log(array[i]) // prints apples oranges bananas
+    console.log(array[i]); // prints apples oranges bananas
+  }
+  // and can iterate over an array backwards
+for (var i = array.length - 1; i >= 0; i--) {
+    console.log(array[i]); // prints bananas oranges apples 
   }
   // can count up
 for (var i = 0; i < 5; i++) {
@@ -24,13 +28,18 @@ for ( var i = 5; i >= 1; i--) {
   console.log(i); // prints 5 4 3 2 1
 }
 
+
 // For-In Loop
-/* good for looping through objects. they allow you to go through the keys to get the values. must use array syntax!! */
-var object = {key1: 1, key2: 2};
+/* good for looping through objects. they allow you to go through the keys to get the values. */
+var object = {
+  key1: 1, 
+  key2: 2};
 
 for ( var key in object ) {
 console.log(object[key]); // prints 1 2
 }
+// or to print all keys in an object use Object.keys
+console.log(Object.keys(object)); //
 
 // While Loop
 /* loops through a block of code as long as a specified condition is true. */

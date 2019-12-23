@@ -43,7 +43,16 @@ if (false){
 
 // Switch Statements
 /* using the keyword switch starts the chain. unlike if statements, you need a break statement to end a code block. To end the chain, 
-use the keyword resault. */
+use the keyword resault. 
+
+the switch statement looks for a case clause that evaluates to true, similar to if-else-if statements.
+this is what tells javascript to run the code block. if false, it moves on to the next case.
+
+When using the break keyword, it breaks out of the switch block, meaning it stops the execution of inside the block.
+You do not have to break the last case in a switch block. The block breaks there anyway.
+
+The default keyword specifies the code to run if there is no case match, kind of like the "else" in if-if-else-else statements.
+*/
 
 var fruit = "Banana";
 switch (fruit) {
@@ -56,3 +65,6 @@ switch (fruit) {
   default:
    console.log('you are a fruitcake');
 } 
+
+
+

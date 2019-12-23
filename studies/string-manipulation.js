@@ -13,6 +13,11 @@
 // strings can be 'added' or concatenated with the + operator
 "H" + "i"; // Hi
 
+// strings can also use the += operator
+var string = "Hello";
+string += "World"; // adds and assigns to variable string
+console.log(string); // prints HelloWorld
+
 // typeof
 // determines the type of value
 let string1 = "This is a string";

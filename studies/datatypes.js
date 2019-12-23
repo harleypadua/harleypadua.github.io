@@ -19,7 +19,7 @@
 // - Primitive Data Types - //
 // Numbers //
 /* numbers are any numeric value that are positive, negative
-or with decimal points. Numbers can be added, subtracted, divided, or multipled
+or with decimal points. Numbers can be added, subtracted, divided, or multiplied
 to create new values in JavaScript.
 */
 var num = 10; // positve number
@@ -75,6 +75,14 @@ it is still defined, it only happens that its value is nothing.
 var valueOfNothing = null;
 
 
+// When we assign these variables to other variables using =, we copy the value to the new variable. They are copied by value.
+// Changing one does not change the other.
+var num1 = 30;
+var num2 = num1;
+// Both num1 and num2 now contain 30. They’re still separate since only the values themselves were copied.
+
+
+
 
 // -Complex Data Types- //
 // Arrays //
@@ -86,7 +94,7 @@ var anArray = ["This", "is", "a", "list", 4];
 Arrays are what is called 0 indexed, meaning that the first value in the list has an index of 0, 
 the second has an index of 1 and so on. To access these indexes, we use bracket notation.
 */
-console.log(anArray[0]) // prints "This" to the console since it starts at the 0 index.
+console.log(anArray[0]); // prints "This" to the console since it starts at the 0 index.
 
 // Objects //
 /* Objects also store references to data such as strings, numbers, booleans, other arrays, and even functions, 
@@ -95,7 +103,7 @@ usually relating to a single object stored in {}
 var anObject = {
     key1: 'a',
     key2: 'b'
-}
+};
 // the {} are what allows JavaScript to recognize it as an object
 
 // Unlike arrays, values are stored at keys in objects. We can access these properties by using bracket notation OR dot notation
@@ -114,4 +122,17 @@ function aFunction(par1, par2) {
 /* calling a function runs the code in the function body
 to call a function, use its name followed by Parenthesis()
 */
-aFunction()
+aFunction();
+
+// When you are passing something by reference, you are passing something that points to something else, not a copy of the object.
+// Thanks to this we can modify values that sit in those memory addresses.
+
+var myName = {};
+function myNameIs(aName){
+  aName.firstName = "Slim Shady";
+}
+myNameIs(myName);
+console.log(myName); // prints Object {firstName: "Slim Shady"}
+
+// The object did change in the when we passed it to the function because i'm not passing a copy, i'm passing a refernce to myName.
+// So when i changed a property of the object in the function, it changes the object in the outerscope.
