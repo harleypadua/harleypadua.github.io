@@ -12,10 +12,13 @@ return Object.values(object);
 //////////////////////////////////////////////////////////////////////
 
 function keysToString(object) {
+    // create empty string
     var string = "";
+    // loop through object
     for (var key in object) {
+        // add key and space to string variable
         string += key + " ";
-    }
+    } // trim whitspace
 return string.trim();
 
 
@@ -76,7 +79,7 @@ function capitalizeAllWords(string) {
     var splitString = string.split(" ");
     // loop through created array
     for (var i = 0; i < splitString.length; i++) {
-        // at plit sting index i, capitalize the first index (0) at given index in loop, and slice
+        // at split string index i, capitalize the first index (0) at given index in loop, and slice
        splitString[i] = splitString[i][0].toUpperCase() + splitString[i].slice(1);
     }// return splitString joined back together with space
     return splitString.join(" ");
