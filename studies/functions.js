@@ -37,9 +37,32 @@ function subtract(num1, num2) {
     return num1 - num2; // important to note that when a function reaches a return statement, it will stop executing.
 }
 
-subtract(27, 3); // prints 24
-/* The above example is a named function and is hoisted to the top of its scope, meaning that it can be used in the program
-before it was defined. So instead of calling the function after i defined it, i could have called it before and 24 would still print. */
+subtract(27, 3); // prints 24 
+
+// Scope
+// Functions are hoisted to the top of thier scope, meaning that they can be used in the program before they are declared. 
+
+address(42, "Wallaby Way"); // prints 42 Wallaby Way
+// The function address has not been declared until line 48, but here I can invoke it and still get the desired result.
+
+function address(num, string) {
+    var liveAt = num + ' ' + string;
+    return liveAt;
+}
+
+/* Functions do NOT have to include parameters or a return statement, which allows more freedom when using functions.
+// Important to note that functions that do not return anything are by default, undefined.
+*/ 
+
+function sub() {
+  var minus = 0;
+  for (var i = 0; i < arguments.length; i++) {
+    minus -= arguments[i];
+  }
+  // if a return statement (return minus) is added here, sub can be invoked with any arguments and the function will work
+  // without one, when invoked, the function will do nothing since, by default, it is undefined
+}
+
 
 // Assigning functions to a variable? You can do that! 
 let sum = multiply(17, 6); 
@@ -47,7 +70,6 @@ let sum = multiply(17, 6);
 console.log(sum); // prints 102 since functions are hoisted to the top of the global scope
 
 function multiply(num1, num2) { 
-    // and here is an example of a function being defined AFTER it is called!
     return num1 * num2;
 }
 

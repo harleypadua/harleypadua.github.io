@@ -38,8 +38,11 @@ var object = {
 for ( var key in object ) {
 console.log(object[key]); // prints 1 2
 }
-// or to print all keys in an object use Object.keys
-console.log(Object.keys(object)); //
+
+// or to print all keys in an object
+for (var key in object) {
+  console.log(key); // prints key1 key2
+}
 
 // While Loop
 /* loops through a block of code as long as a specified condition is true. */

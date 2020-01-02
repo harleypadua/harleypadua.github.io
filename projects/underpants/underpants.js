@@ -46,8 +46,21 @@ _.identity = function(value){
 */
 
 _.typeOf = function(value){
-    var x = typeof value;
-    return x.toString();
+    // check if value is null
+        if (value === null){
+        return "null";
+        // check for if value is array. can use function stated earlier
+    } else if (Array.isArray(value)){
+        return "array";
+        // check for if date
+    } else if (value instanceof Date){
+        return "date";
+        // check if object === object
+    } else if (typeof value === 'object'){ 
+       return "object";
+       // account for any other value that may get passed through
+   } else { return typeof value }
+    
 };
 
 /** _.first
@@ -68,6 +81,26 @@ _.typeOf = function(value){
 *   _.first(["a", "b", "c"], 2) -> ["a", "b"]
 */
 
+_.first = function(array, number) {
+    // check is array is not an array and return []
+    if (!Array.isArray(array)) {
+        return [];
+    } 
+    // check if negative number and return []
+    if (number < 0) {
+        return [];
+    }
+    // check is number is greater than array.length and return array
+    if (number > array.length) {
+    return array;
+    }
+    // check if number is gretaer than 0 return elements of array
+    if (number > 0) {
+       return array.splice(0, number);
+    }
+    // return first element of array if no numerical argument is given
+    return array[0];
+};
 
 /** _.last
 * Arguments:
@@ -87,6 +120,26 @@ _.typeOf = function(value){
 *   _.last(["a", "b", "c"], 2) -> ["b", "c"]
 */
 
+_.last = function(array, number) {
+    // check if array is not an array and return []
+    if (!Array.isArray(array)) {
+        return [];
+    } 
+    // check is number is negative and return []
+    if (number < 0){
+        return [];
+    }
+    // check if number is greater than the array
+    if (number > array.length) {
+        return array;
+    }
+    // if number is greater than 0 return last 2 elements of array
+    if (number > 0) {
+        return array.splice(array.length - number, number);
+    }
+    // return last element of array if no numerical argument is given
+    return array[array.length -1];
+};
 
 /** _.indexOf
 * Arguments:
@@ -104,6 +157,18 @@ _.typeOf = function(value){
 *   _.indexOf(["a","b","c"], "d") -> -1
 */
 
+_.indexOf = function(array, value) {
+    // loop through array to find first occurance of value
+    for (let i = 0; i < array.length; i++) {
+        // if value is in array return index 
+        if (array[i] === value) {
+            return i;
+        }
+        
+    }
+    // if not found in array, return -1
+    return -1;
+};
 
 /** _.contains
 * Arguments:
@@ -120,6 +185,12 @@ _.typeOf = function(value){
 *   _.contains([1,"two", 3.14], "two") -> true
 */
 
+_.contains = function(array, value) {
+    // indexOf will check if value is there and return value. if its not there it returns -1.
+    // using the ternary operator, checks if array doesnt have value and returns false. if it does, returns true
+    return _.indexOf(array, value) === -1 ? false : true;
+
+};
 
 /** _.each
 * Arguments:
@@ -137,6 +208,23 @@ _.typeOf = function(value){
 *      -> should log "a" "b" "c" to the console
 */
 
+_.each = function(collection, f) {
+    // check if collection is an array
+   if (Array.isArray(collection)) {
+       // loop through collection
+       for (let i = 0; i < collection.length; i++) {
+           // call function (f) on each element of array with arguments of element, it's index, and collection
+           f(collection[i], i, collection);
+       }
+           // if object
+       } else {
+           // loop through object
+           for (let key in collection) {
+               // call function (f) on each property of collection with the arguments of property's value, it's key, and collection
+               f(collection[key], key, collection);
+           }
+       }
+};
 
 /** _.unique
 * Arguments:
@@ -148,6 +236,19 @@ _.typeOf = function(value){
 *   _.unique([1,2,2,4,5,6,5,2]) -> [1,2,4,5,6]
 */
 
+_.unique = function(array) {
+    // create empty array to push elements with duplicates removed
+    let newArray = [];
+    // loop through array
+    for (let i = 0; i < array.length; i++) {
+        // use indexOf to check if newArray has elements of array. if not, push elements to newArray
+        if (_.indexOf(newArray, array[i]) === -1){
+             newArray.push(array[i]);
+        }
+    }
+    // return newArray
+    return newArray;
+};
 
 /** _.filter
 * Arguments:
@@ -165,6 +266,19 @@ _.typeOf = function(value){
 *   use _.each in your implementation
 */
 
+_.filter = function(array, func){
+    // create new array for elements of function that returned true
+    let trueArr = [];
+    // call each to loop through array with anonymous function acting on element, index and array
+    _.each(array, function(element, index, array){
+        // if calling func returns true, push to the new array (trueArr)
+        if(func(element, index, array) === true){
+            trueArr.push(element);
+        }
+    });
+    // return new array
+    return trueArr;
+};
 
 /** _.reject
 * Arguments:
@@ -178,6 +292,18 @@ _.typeOf = function(value){
 * Examples:
 *   _.reject([1,2,3,4,5], function(e){return e%2 === 0}) -> [1,3,5]
 */
+
+_.reject = function(array, func){
+    // set a new variable called filterResult using filter on given array that uses an anonymous function on element, index anf array
+    var filterResult = array.filter(function(element, index, array){
+        // if func returns false, returns a new array with elements
+        if(func(element, index, array) === false){
+            return element;
+        }
+    });
+    // return new array
+    return filterResult;
+};
 
 
 /** _.partition
@@ -199,6 +325,34 @@ _.typeOf = function(value){
 }
 */
 
+_.partition = function(array, func){
+    // create 3 arrays. one for truthy values, one for falsy values, and one to push them both in.
+    let truthy = [];
+    let falsy = [];
+    let arrays = [];
+    // loop through array to find values when func is called on array is false
+    for(let i = 0; i < array.length; i++){
+        if(func(array[i], i, array) === false){
+            // push results to array
+            falsy.push(array[i]);
+        }
+        
+    }
+    // loop through array to find values when func is called on array is true
+    for (let i = 0; i < array.length; i++){
+        if(func(array[i], i, array) === true){
+            // push results to array
+            truthy.push(array[i]);
+        }
+    }
+    // add truthy and falsy arrays to arrays
+    arrays.push(truthy);
+    arrays.push(falsy);
+    // return arrays
+    return arrays;
+    
+};
+
 
 /** _.map
 * Arguments:
@@ -216,6 +370,25 @@ _.typeOf = function(value){
 *   _.map([1,2,3,4], function(e){return e * 2}) -> [2,4,6,8]
 */
 
+_.map = function(collection, func){
+    let newArray = [];
+    // check for if array
+    if(Array.isArray(collection)){
+        // if array, loop through array
+        for(let i = 0; i < collection.length; i++){
+            // push result of function call on element, index and array
+           newArray.push(func(collection[i], i, collection));
+        }
+    } else {
+        // if object loop through object
+        for(var key in collection) {
+            // push result of function call on value, key, and object
+            newArray.push(func(collection[key], key, collection));
+        }
+    }
+    // return new array
+    return newArray;
+};
 
 /** _.pluck
 * Arguments:
@@ -228,6 +401,9 @@ _.typeOf = function(value){
 *   _.pluck([{a: "one"}, {a: "two"}], "a") -> ["one", "two"]
 */
 
+_.pluck = function(array, property){
+    array.map(func(collection[key], ))
+};
 
 /** _.every
 * Arguments:
