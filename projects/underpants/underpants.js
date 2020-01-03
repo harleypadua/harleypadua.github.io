@@ -294,7 +294,7 @@ _.filter = function(array, func){
 */
 
 _.reject = function(array, func){
-    // set a new variable called filterResult using filter on given array that uses an anonymous function on element, index anf array
+    // set a new variable called filterResult using filter on given array that uses an anonymous function on element, index and array
     var filterResult = array.filter(function(element, index, array){
         // if func returns false, returns a new array with elements
         if(func(element, index, array) === false){
@@ -402,7 +402,11 @@ _.map = function(collection, func){
 */
 
 _.pluck = function(array, property){
-    array.map(func(collection[key], ))
+    // use map to loop through array, returning a new array of elements from array
+    return array.map(function(element, index, array){
+        // return property for each element in array in new array
+        return element[property];
+    });
 };
 
 /** _.every
@@ -426,6 +430,38 @@ _.pluck = function(array, property){
 *   _.every([1,2,3], function(e){return e % 2 === 0}) -> false
 */
 
+_.every = function(collection, func) {
+    // check if a function is provided
+    if (!func) {
+        // loop through collection to find falsy values
+        for (let i = 0; i < collection.length; i++) {
+            if (collection[i] === false) {
+                return false;
+            }
+        } // return true if no falsy values are found
+        return true;
+    }
+    // check for if collection is an array
+    if (Array.isArray(collection)){
+        // loop through array
+    for (var i = 0; i < collection.length; i++) {
+        //check if when function called on elements of array returns false
+        if (func(collection[i], i, collection) === false) {
+            return false;
+            // return true if passes
+        } 
+    } 
+    return true; 
+    }
+    // else if object, loop through object
+    for (let key in collection) {
+        // if the function called on the keys of the object retruns false, return false
+        if (func(collection[key], key, collection) === false) {
+            return false;
+        } 
+    }
+    return true;
+};
 
 /** _.some
 * Arguments:
@@ -448,6 +484,36 @@ _.pluck = function(array, property){
 *   _.some([1,2,3], function(e){return e % 2 === 0}) -> true
 */
 
+_.some = function(collection, func) {
+    if (!func) {
+        // loop through collection to find truthy values
+        for (let i = 0; i < collection.length; i++) {
+            if (collection[i] === true) {
+                return true;
+            }
+        } // return flase if no truthy values are found
+        return false;
+    }
+    // check for if collection is an array
+    if (Array.isArray(collection)){
+        // loop through array
+    for (var i = 0; i < collection.length; i++) {
+        //check if when function called on elements of array returns true
+        if (func(collection[i], i, collection) === true) {
+            return true;
+        } 
+    }  // return false if it doesn't pass
+    return false; 
+    }
+    // else if object, loop through object
+    for (let key in collection) {
+        // if the function called on the keys of the object retruns true, return true
+        if (func(collection[key], key, collection) === true) {
+            return true;
+        } 
+    }// else return false
+    return false;
+};
 
 /** _.reduce
 * Arguments:
@@ -468,6 +534,24 @@ _.pluck = function(array, property){
 *   _.reduce([1,2,3], function(previousSum, currentValue, currentIndex){ return previousSum + currentValue }, 0) -> 6
 */
 
+_.reduce = function(array, func, seed){
+    //if seed is given and not falsy
+    if (seed !== undefined) {
+        // use seed as previous result and pass in that with element and index into func, assigning the result to seed
+        for (let i = 0; i < array.length; i++) {
+            seed = func(seed, array[i], i, array);
+        }
+    } else { // if no seed was given or if seed is falsy
+    // assign seed to be the first element of the array
+    seed = array[0];
+    // loop through array starting at 1 (since seed is 0 and you don;t want to count it twice)
+    for (let i = 1; i < array.length; i++) {
+        // reassign seed to the result of function call
+        seed = func(seed, array[i], i, array); 
+    }
+    } // return value of final function call
+   return seed;
+};
 
 /** _.extend
 * Arguments:
@@ -483,6 +567,14 @@ _.pluck = function(array, property){
 *   _.extend(data, {b:"two"}); -> data now equals {a:"one",b:"two"}
 *   _.extend(data, {a:"two"}); -> data now equals {a:"two"}
 */
+
+_.extend = function(obj1, ...objArgs) {
+   
+//Object.assign() method copies all enumerable own properties from one or more source objects(...objArgs) to a target object(obj1) and returns target object
+let updatedObj1 = Object.assign(obj1, ...objArgs);
+  //return the updated object. 
+   return updatedObj1;
+};
 
 //////////////////////////////////////////////////////////////////////
 // DON'T REMOVE THIS CODE ////////////////////////////////////////////
