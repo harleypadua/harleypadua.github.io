@@ -50,6 +50,15 @@ function address(num, string) {
     return liveAt;
 }
 
+// Variables declared inside a function cannot be accessed outside the function because they are local scoped. I think of it like the function owns the variable
+// console.log(liveAt); <-- error: liveAt not defined
+// If the variable was let or const and was declared within an if-else statement within the function, it's scope would be code blocked and therefore
+// unavailable outside that if-else statement even though it is nested inside the function
+
+// However, if the variable, whether it was var, let OR const, was declared in the global scope, not only would the function have access to the variable, it would 
+// also become possible to use that variable later in the code
+
+
 /* Functions do NOT have to include parameters or a return statement, which allows more freedom when using functions.
 // Important to note that functions that do not return anything are by default, undefined.
 */ 
