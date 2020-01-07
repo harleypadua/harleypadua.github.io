@@ -152,7 +152,41 @@ var friendsCount = function(array, name) {
     return friends;
 };
 
-var topThreeTags;
+var topThreeTags = function(array){
+    // create empty array for top tags
+    let tags = _.reduce(array, function(prevCustomer, currentCustomer){
+        // get all tags in customer object
+        // currentCustomer.tags === [] with tags
+        // to get tags, iterate over each array and add them to the seed
+        let arrOfTags = currentCustomer.tags;
+        _.each(arrOfTags, function(tag){
+            // if the tags exists, add by 1
+            if (prevCustomer[tag]){// if it is in seed
+            prevCustomer[tag] += 1;
+            // if not, add new property
+            } else { 
+            prevCustomer[tag] = 1;
+            }  
+        });
+        return prevCustomer;
+    }, {});
+    // create new variable to hold nested arrays to be sorted
+    let holder = [];
+    _.each(tags, function(value, key){
+        holder.push([key, value]);
+    });
+    //sort holder array using sort method
+    holder.sort(function(a, b){
+        return b[1] - a[1];
+    });
+    // use slice to sclice off first 3 tags
+    var top3 = holder.slice(0, 3);
+    // use map to return a new array containing only the tag names
+    let test = _.map(top3, function(nestedArray){
+        return nestedArray[0];
+    });
+    return test;
+};
 
 var genderCount = function(array, object){
     //create variables for each gender count
